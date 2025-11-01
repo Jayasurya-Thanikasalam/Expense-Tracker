@@ -38,7 +38,7 @@ function updateValues() {
 function addTransactionDOM(transaction) {
   const tr = document.createElement("tr");
   tr.innerHTML = `
-    <td>${transaction.date}</td>
+    <td>${formatDate(transaction.date)}</td>
     <td>${transaction.text}</td>
     <td class="amount ${
       transaction.amount < 0 ? "expense" : ""
@@ -114,3 +114,14 @@ function init() {
 }
 
 init();
+
+function formatDate(isoDate) {
+  const date = new Date(isoDate);
+
+  // Get day, month, and year
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}
