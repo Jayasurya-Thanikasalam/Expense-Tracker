@@ -49,14 +49,20 @@ function addTransactionDOM(transaction) {
 }
 
 function removeTransaction(id) {
-  fetch(`http://localhost:8080/ExpTrack/transactions/${username}/${id}`, {
-    method: "DELETE",
-  })
-    .then(() => {
-      transactions = transactions.filter((t) => t.id !== id);
-      updateUI();
+  const confirmed = confirm(
+    "Are you sure you want to delete this transaction?"
+  );
+
+  if (confirmed) {
+    fetch(`http://localhost:8080/ExpTrack/transactions/${username}/${id}`, {
+      method: "DELETE",
     })
-    .catch((err) => console.error("Delete failed", err));
+      .then(() => {
+        transactions = transactions.filter((t) => t.id !== id);
+        updateUI();
+      })
+      .catch((err) => console.error("Delete failed", err));
+  }
 }
 
 function updateUI() {
